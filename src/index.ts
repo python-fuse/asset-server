@@ -11,6 +11,10 @@ import { requestLogger } from "./middleware/requestLogger";
 import { authenticate } from "./middleware/authenticate";
 import authRouter from "./routes/auth.route";
 import userRouter from "./routes/user.route";
+import logsRouter from "./routes/logs.route";
+import movementsRouter from "./routes/movement.route";
+import categoriesRouter from "./routes/categories.route";
+import assetsRouter from "./routes/assets.route";
 
 // Import Prisma client
 import prisma from "./utils/prisma";
@@ -68,6 +72,10 @@ app.get("/health", (req, res) => {
 
 app.use("/api/users", authenticate, userRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/assets", assetsRouter);
+app.use("/api/movements", movementsRouter);
+app.use("/api/categories", categoriesRouter);
+app.subscribe("/api/logs", logsRouter);
 
 // Error handling middleware
 app.use(errorHandler);
