@@ -1,4 +1,4 @@
-import e, { Router } from "express";
+import { Router } from "express";
 import upload from "../middleware/uploadHandler";
 
 export const uploadRouter = Router();

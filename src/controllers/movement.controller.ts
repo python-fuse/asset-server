@@ -80,6 +80,17 @@ class MovementController {
       next(e);
     }
   }
+
+  async getMovementsByUserId(req: Request, res: Response, next: NextFunction) {
+    const userId = req.params.id;
+
+    try {
+      const movements = await movementService.getMovementsByUserId(userId);
+      res.status(200).json(movements);
+    } catch (e) {
+      next(e);
+    }
+  }
 }
 
 export default new MovementController();
