@@ -3,7 +3,7 @@ import { Asset } from "@prisma/client";
 
 class AssetService {
   async createAsset(
-    data: Omit<Asset, "id" | "createdAt" | "updatedAt">
+    data: Omit<Asset, "id" | "status" | "image_url" | "createdAt" | "updatedAt">
   ): Promise<Asset> {
     return prisma.asset.create({ data });
   }

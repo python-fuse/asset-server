@@ -16,6 +16,12 @@ class MovementService {
     return prisma.movement.findMany();
   }
 
+  async getMovementsByAssetId(
+    assetId: Movement["assetId"]
+  ): Promise<Movement[]> {
+    return prisma.movement.findMany({ where: { assetId } });
+  }
+
   async updateMovement(
     id: Movement["id"],
     data: Partial<Omit<Movement, "id" | "createdAt" | "updatedAt">>
