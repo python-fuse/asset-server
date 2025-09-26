@@ -18,21 +18,32 @@ model User {
   name      String
   email     String   @unique
   password  String
-  role      Role     @default(ASSET_MANAGER)
+  role      Role     @default(AUDITOR)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  createdAssets Asset[]    @relation("createdBy")
+  Movement      Movement[]
+
+  Log Log[]
 }
 
 model Asset {
-  id         String      @id @unique @default(uuid())
-  name       String
-  status     AssetStatus @default(FREE)
-  categoryId String
+  id              String      @id @unique @default(uuid())
+  name            String
+  status          AssetStatus @default(AVAILABLE)
+  categoryId      String
+  acquisitionDate DateTime
+  location        String
+  image_url       String?
+  createdById     String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  Category Category @relation(fields: [categoryId], references: [id])
+  Category  Category @relation(fields: [categoryId], references: [id])
+  createdBy User     @relation("createdBy", fields: [createdById], references: [id])
+  Log       Log[]
 }
 
 model Category {
@@ -42,6 +53,35 @@ model Category {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   assets      Asset[]
+}
+
+model Movement {
+  id           String @id @unique @default(uuid())
+  assetId      String
+  fromLocation String
+  toLocation   String
+
+  movedById String
+  dateMoved DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  movedBy User @relation(fields: [movedById], references: [id])
+}
+
+model Log {
+  id        String   @id @unique @default(uuid())
+  userId    String
+  action    Action   @default(REGISTERED)
+  assetId   String?
+  timestamp DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user  User   @relation(fields: [userId], references: [id])
+  asset Asset? @relation(fields: [assetId], references: [id])
 }
 
 model Session {
@@ -58,7 +98,15 @@ enum Role {
 }
 
 enum AssetStatus {
-  MOVING
-  ALLOCATED
-  FREE
+  AVAILABLE
+  ASSIGNED
+  MAINTENANCE
+  DISPOSED
+}
+
+enum Action {
+  MOVED
+  UPDATED
+  REGISTERED
+  DELETED
 }
