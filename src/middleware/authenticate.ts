@@ -23,8 +23,8 @@ export async function authorize(
   next: NextFunction
 ) {
   if (
-    req.session.user?.role === "SUPERVISOR" ||
-    req.session.user?.role === "ADMIN"
+    req.session.user?.role === "ADMIN" ||
+    req.session.user?.role === "ASSET_MANAGER"
   ) {
     next();
     return;
@@ -32,6 +32,6 @@ export async function authorize(
 
   throw new ApiError(
     403,
-    "Only Admins and Supervisors can access this resource"
+    "Only Admins and Asset Managers can access this resource"
   );
 }

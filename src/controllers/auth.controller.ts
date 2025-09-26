@@ -37,7 +37,7 @@ class AuthController {
         name,
         email,
         password,
-        role: role || Role.STAFF,
+        role: role || Role.AUDITOR,
       });
 
       res.status(201).json(newUser);
