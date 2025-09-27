@@ -1,0 +1,123 @@
+ASSET MANAGEMENT SYSTEM API
+
+Base URL: http://localhost:5000/api
+
+AUTHENTICATION (Session-based)
+- POST /auth/register - Register new user
+- POST /auth/login - Login user
+- POST /auth/logout - Logout user
+
+USER MANAGEMENT
+- GET /users - Get all users (auth required)
+- GET /users/:id - Get user by ID
+- PUT /users/:id - Update user
+- DELETE /users/:id - Delete user
+
+ASSET MANAGEMENT
+- GET /assets - Get all assets (filters: status, categoryId, location, page, limit)
+- GET /assets/:id - Get asset by ID
+- POST /assets - Create asset
+- PUT /assets/:id - Update asset
+- DELETE /assets/:id - Delete asset
+
+CATEGORY MANAGEMENT
+- GET /categories - Get all categories
+- GET /categories/:id - Get category by ID
+- POST /categories - Create category
+- PUT /categories/:id - Update category
+- DELETE /categories/:id - Delete category
+
+MOVEMENT TRACKING
+- GET /movements - Get all movements
+- GET /movements/:id - Get movement by ID
+- POST /movements - Create movement
+- PUT /movements/:id - Update movement
+- DELETE /movements/:id - Delete movement
+
+ACTIVITY LOGS
+- GET /logs - Get all logs (filters: userId, assetId, action, startDate, endDate)
+- GET /logs/:id - Get log by ID
+- POST /logs - Create log
+
+FILE UPLOAD
+- POST /upload/asset-image - Upload asset image (multipart/form-data)
+
+DATA MODELS:
+
+User:
+{
+  id: string,
+  name: string,
+  email: string,
+  role: "ADMIN" | "ASSET_MANAGER" | "AUDITOR",
+  createdAt: datetime,
+  updatedAt: datetime
+}
+
+Asset:
+{
+  id: string,
+  name: string,
+  description: string,
+  status: "AVAILABLE" | "ASSIGNED" | "MAINTENANCE" | "DISPOSED",
+  categoryId: string,
+  acquisitionDate: datetime,
+  location: string,
+  image_url: string?,
+  createdById: string,
+  createdAt: datetime,
+  updatedAt: datetime
+}
+
+Category:
+{
+  id: string,
+  name: string,
+  description: string?,
+  createdAt: datetime,
+  updatedAt: datetime
+}
+
+Movement:
+{
+  id: string,
+  assetId: string,
+  fromLocation: string,
+  toLocation: string,
+  movedById: string,
+  dateMoved: datetime,
+  createdAt: datetime,
+  updatedAt: datetime
+}
+
+Log:
+{
+  id: string,
+  userId: string,
+  action: "MOVED" | "UPDATED" | "REGISTERED" | "DELETED",
+  assetId: string?,
+  timestamp: datetime,
+  createdAt: datetime,
+  updatedAt: datetime
+}
+
+RESPONSE FORMAT:
+Success: { success: true, message: string, data: object }
+Error: { success: false, message: string, errors?: array }
+
+TEST CREDENTIALS:
+- admin@company.com / password123 (ADMIN)
+- manager@company.com / password123 (ASSET_MANAGER)
+- auditor@company.com / password123 (AUDITOR)
+
+FEATURES NEEDED IN FRONTEND:
+1. Login/Logout pages
+2. Dashboard with asset overview
+3. Asset management (CRUD with image upload)
+4. Category management
+5. User management (admin only)
+6. Movement tracking
+7. Activity logs/audit trail
+8. Role-based UI (different views for different roles)
+9. Asset filtering and search
+10. Responsive design
