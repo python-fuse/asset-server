@@ -75,7 +75,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/assets", assetsRouter);
 app.use("/api/movements", movementsRouter);
 app.use("/api/categories", categoriesRouter);
-app.subscribe("/api/logs", logsRouter);
+app.use("/api/logs", logsRouter);
 
 // Error handling middleware
 app.use(errorHandler);

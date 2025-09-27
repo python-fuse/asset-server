@@ -20,7 +20,7 @@ export const errorHandler = (
   next: NextFunction
 ) => {
   console.error(`Error: ${err.message}`);
-  console.error(err.stack);
+  // console.error(err.stack);
 
   // Check if error is an instance of ApiError
   if (err instanceof ApiError) {
