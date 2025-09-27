@@ -3,11 +3,13 @@ import { Router } from "express";
 const router = Router();
 
 // Import controllers
-import logsController from "../controllers/logs.controller";
+import categoriesController from "../controllers/categories.controller";
 
-// Define routes
-router.get("/", logsController.getAllLogs);
-router.get("/asset/:id", logsController.getLogsByAssetId);
-router.get("/user/:id", logsController.getLogsByUserId);
+// Routes
+router.get("/", categoriesController.getAllCategories);
+router.get("/:id", categoriesController.getCategoryById);
+router.post("/", categoriesController.createCategory);
+router.put("/:id", categoriesController.updateCategory);
+router.delete("/:id", categoriesController.deleteCategory);
 
 export default router;
