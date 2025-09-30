@@ -36,12 +36,18 @@ class MovementController {
         dateMoved: new Date(),
       });
 
+      await assetService.updateAsset(assetId, {
+        location: toLocation,
+      });
+
       await logsService.createLog({
         action: "MOVED",
         assetId,
         timestamp: new Date(),
         userId: movedById,
       });
+
+      res.status(201).json(newMovement);
     } catch (e) {
       next(e);
     }
